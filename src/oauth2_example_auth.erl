@@ -54,7 +54,7 @@ init(_Transport, _Req, _Opts) ->
     {upgrade, protocol, cowboy_rest}.
 
 rest_init(Req, _Opts) ->
-    {ok, Req, undefined_state}.
+    {ok, Req, []}.
 
 content_types_provided(Req, State) ->
     {[{{<<"text">>, <<"html">>, []}, process_get}], Req, State}.
@@ -68,6 +68,7 @@ allowed_methods(Req, State) ->
     {[<<"POST">>, <<"GET">>], Req, State}.
 
 process_post(Req, State) ->
+ 
     {ok, Body, Req2} = cowboy_req:body(Req),
     Params = decode_form(Body),
     {ok, Reply} =
@@ -198,7 +199,7 @@ emit_response(AuthResult, Req) ->
     cowboy_req:reply(Code, [], JSON, Req).
 
 decode_form(Form) ->
-    RawForm = cowboy_http:urldecode(Form),
+    RawForm = cow_qs:urldecode(Form),
     Pairs = binary:split(RawForm, <<"&">>, [global]),
     lists:map(fun(Pair) ->
                       [K, V] = binary:split(Pair, <<"=">>),

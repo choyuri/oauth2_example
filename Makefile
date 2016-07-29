@@ -23,8 +23,5 @@ distclean: clean
 	@$(REBAR) delete-deps
 	-@rmdir deps
 
-start: compile
-	erl \
-	-pa ebin -pa deps/*/ebin \
-	-config priv/app.config \
-	-s oauth2_example
+start: 
+	erl -name oauth2_example@192.168.33.10 -setcookie oauth2_example -pa ebin -pa deps/*/ebin -config priv/app.config -s oauth2_example -init_debug -eval "oauth2_example:start()."

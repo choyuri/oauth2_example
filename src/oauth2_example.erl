@@ -39,6 +39,7 @@
 start() ->
     application:start(ranch),
     application:start(crypto),
+    application:start(cowlib),
     application:start(cowboy),
     application:start(oauth2),
     application:start(oauth2_example).

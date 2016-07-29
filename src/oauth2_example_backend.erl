@@ -41,6 +41,7 @@
 %%% Behavior API
 -export([authenticate_username_password/3]).
 -export([authenticate_client/3]).
+-export([authenticate_client/2]).
 -export([get_client_identity/2]).
 -export([associate_access_code/3]).
 -export([associate_refresh_token/3]).
@@ -127,6 +128,9 @@ authenticate_username_password(Username, Password, _) ->
         Error = {error, notfound} ->
             Error
     end.
+
+authenticate_client(ClientId, ClientSecret) ->
+    authenticate_client(ClientId, ClientSecret, undefined).
 
 authenticate_client(ClientId, ClientSecret, _) ->
     case get(?CLIENT_TABLE, ClientId) of
